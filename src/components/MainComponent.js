@@ -4,6 +4,8 @@ import Directory from './DirectoryComponent';
 import MenuInfo from './MenuInfoComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
+import Home from './HomeComponent';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { MENUS } from '../shared/menus';
 
 class Main extends Component {
@@ -11,21 +13,24 @@ class Main extends Component {
         super(props);
         this.state = {
             menus: MENUS,
-            selectedMenu: null
         };
     }
 
-onMenuSelect(menuId) {
-    this.setState({selectedMenu: menuId});
-}
-
-
   render() {
+    const HomePage = () => {
+        return (
+            <Home />
+        );
+    }
+
       return (
         <div>
-            <Header />           
-            <Directory menus={this.state.menus} onClick={menuId => this.onMenuSelect(menuId)} />
-            <MenuInfo menu={this.state.menus.filter(menu => menu.id === this.state.selectedMenu)[0]} />
+            <Header />
+            <Switch>           
+                <Route path='/home' component={HomePage} />
+                <Route exact path='/directory' render={() => <Directory menus={this.state.menus}/>} />       
+                <Redirect to='/home' />         
+            </Switch>
             <Footer />
         </div>
       );

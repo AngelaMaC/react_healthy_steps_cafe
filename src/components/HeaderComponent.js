@@ -1,43 +1,63 @@
 import React, { Component }  from 'react';
-import { Navbar, NavbarBrand, Jumbotron } from 'reactstrap';
+import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.toggleNav = this.toggleNav.bind(this);
+        this.state = {
+            isNavOpen: false
+        };
+    }
+
+    toggleNav() {
+        this.setState({
+            isNavOpen: !this.state.isNavOpen
+        });
+    }
+
     render() {
         return (
             <React.Fragment>
-
-                <Navbar sticky="top" className="navbar navbar-dark navbar-expand-md justify-content-center">
-                    <button className="navbar-toggler ml-1" type="button" data-toggle="collapse" data-target="#collapsingNavbar2">
-                    <span className="navbar-toggler-icon navbar-light"></span>
-                    </button>
-                    <div className="navbar-collapse collapse justify-content-between align-items-center w-100" id="collapsingNavbar2">
-                        <ul className="navbar-nav mx-auto text-center">
-                            <li className="nav-item active">
-                                <a className="nav-link" href="#">Home</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#menu-jump">Menu</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#about-jump">About Us</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#location-jump">Locations</a> 
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#event-jump">Events</a> 
-                            </li>                  
-                        </ul>
-                    </div>
-                </Navbar>
-
                 <Jumbotron fluid d-flex align-items-center>
                     <div className="container">
                         <h1 className="display-2 text-center">Healthy Steps Cafe</h1>
                         <h2 className="lead text-center display-5">A healthy eatery and lifestyle cafe</h2>
                     </div>
                 </Jumbotron>
-                               
+                <Navbar sticky="top" expand="md" className="navbar navbar-dark justify-content-center">
+                    <div className="container">
+                        <NavbarBrand className="mr-auto"></NavbarBrand>
+                        <NavbarToggler onClick={this.toggleNav} />
+                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                            <Nav navbar>
+                                <NavItem>
+                                    <NavLink className="nav-link mx-auto text-center" to="/home">
+                                    <i className="fa fa-home fa-lg" /> Home
+                                    </NavLink>
+                                </NavItem>    
+                                <NavItem>
+                                    <NavLink className="nav-link mx-auto text-center" to="/directory">
+                                    <i className="fa fa-list fa-lg" /> Directory
+                                    </NavLink>
+                                </NavItem>    
+                                <NavItem>
+                                    <NavLink className="nav-link mx-auto text-center" to="/aboutus">
+                                    <i className="fa fa-info fa-lg" /> About
+                                    </NavLink>
+                                </NavItem>    
+                                <NavItem>
+                                    <NavLink className="nav-link mx-auto text-center" to="/contactus">
+                                    <i className="fa fa-address-card fa-lg" /> Contact Us
+                                    </NavLink>
+                                </NavItem>
+                            </Nav>
+                        </Collapse>                            
+                    </div>
+                </Navbar>                               
             </React.Fragment>
         );
     }
